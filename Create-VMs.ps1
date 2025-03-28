@@ -44,11 +44,14 @@ if(Test-Path -Path $JSONPath){
     exit 1
 }
 
+$RemoteCred = Get-Credential -Message "Enter credentials for the remote Hyper-V server"
+
 foreach ($Config in $VMConfigs){
     $ComputerName = $Config.ComputerName
     $VMName = $Config.VMName
     $ProcessorCount = [int]$Config.ProcessorCount
     $MemoryStartupBytes = [int]$Config.MemoryStartupBytes * 1GB
+    #$VHDPath = "\\$($ComputerName)\$($Config.VHDPath)"
     $VHDPath = $Config.VHDPath
     $VHDSizeBytes = [int]$Config.VHDSizeBytes * 1GB
     $ISOPath = $Config.ISOPath
@@ -58,37 +61,36 @@ foreach ($Config in $VMConfigs){
     $Generation = 2 # 1 or 2 for UEFI support if the OS and host support it
 
     # --- Create Virtual Hard Disk ---
-    New-VHD -ComputerName $ComputerName -Path $VHDPath -SizeBytes $VHDSizeBytes
+    New-VHD -ComputerName $ComputerName -Path $VHDPath -SizeBytes $VHDSizeBytes -Credential $RemoteCred
 
     # --- Create Virtual Machine ---
-    New-VM -Name $VMName -ComputerName $ComputerName -MemoryStartupBytes $MemoryStartupBytes -Generation $Generation
+    New-VM -Name $VMName -ComputerName $ComputerName -MemoryStartupBytes $MemoryStartupBytes -Generation $Generation -Credential $RemoteCred
 
     # --- Configure Processor ---
-    Set-VMProcessor -VMName $VMName -ComputerName $ComputerName -Count $ProcessorCount
+    Set-VMProcessor -VMName $VMName -ComputerName $ComputerName -Count $ProcessorCount -Credential $RemoteCred
 
     # --- Connect Network Adapter to Virtual Switch ---
-    Connect-VMNetworkAdapter -VMName $VMName -ComputerName $ComputerName -Name "Network Adapter" -SwitchName $SwitchName
+    Connect-VMNetworkAdapter -VMName $VMName -ComputerName $ComputerName -Name "Network Adapter" -SwitchName $SwitchName -Credential $RemoteCred
 
     # --- Add DVD Drive and Mount ISO ---
-    Add-VMDvdDrive -VMName $VMName -ComputerName $ComputerName -Path $ISOPath
+    Add-VMDvdDrive -VMName $VMName -ComputerName $ComputerName -Path $ISOPath -Credential $RemoteCred
 
     # --- Add Existing Hard Disk ---
-    Add-VMHardDiskDrive -VMName $VMName -ComputerName $ComputerName -Path $VHDPath
+    Add-VMHardDiskDrive -VMName $VMName -ComputerName $ComputerName -Path $VHDPath -Credential $RemoteCred
 
     # --- Set Boot Order and Disable SecureBoot ---
-    $firmware = Get-VMFirmware -VMName $VMName -ComputerName $ComputerName
+    $firmware = Get-VMFirmware -VMName $VMName -ComputerName $ComputerName -Credential $RemoteCred
     $network = $firmware.bootorder[0]
     $dvd = $firmware.bootorder[1]
     $vhd = $firmware.bootorder[2]
 
-    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -FirstBootDevice $dvd
-    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -EnableSecureBoot Off
+    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -FirstBootDevice $dvd -Credential $RemoteCred
+    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -EnableSecureBoot Off -Credential $RemoteCred
 
     # --- Start the Virtual Machine ---
     Write-Host "Starting virtual machine '$VMName'..."
-    Start-VM -Name $VMName -ComputerName $ComputerName
-
+    Start-VM -Name $VMName -ComputerName $ComputerName -Credential $RemoteCred
     # --- Set permant boot order ---
-    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -BootOrder $vhd, $dvd, $network
+    Set-VMFirmware -VMName $VMName -ComputerName $ComputerName -BootOrder $vhd, $dvd, $network -Credential $RemoteCred
     Write-Host "Virtual machine '$VMName' created and started. The OS installation should begin."
 }
