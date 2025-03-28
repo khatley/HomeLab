@@ -6,7 +6,7 @@
       "MemoryStartupBytes": "8",
       "VHDPath": "C:\\Hyper-V\\VMs\\TestVM1.vhdx",
       "VHDSizeBytes": "64",
-      "ISOPath": "C:\\ISOs\\Alpine.iso",
+      "ISOPath": "C:\\ISOs\\Ubuntu.iso",
       "SwitchName": "ExternalSwitch"
     },
 
