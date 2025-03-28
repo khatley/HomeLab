@@ -29,6 +29,7 @@
 
 .EXAMPLE
     .\Create-VM.ps1 .\VM-Alpine-Parameters.json
+    TEST CHANGE TO CONFIRM GIT IS WORKING
 #>
 
 [CmdletBinding()]
