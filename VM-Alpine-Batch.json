@@ -1,5 +1,6 @@
 [
     {
+      "ComputerName": "microserver.lan.shatteredlan.com",
       "VMName": "TestVM1",
       "ProcessorCount": "1",
       "MemoryStartupBytes": "8",
@@ -10,6 +11,7 @@
     },
 
     {
+        "ComputerName": "microserver.lan.shatteredlan.com",
         "VMName": "TestVM2",
         "ProcessorCount": "1",
         "MemoryStartupBytes": "8",
@@ -20,6 +22,7 @@
       },
 
       {
+        "ComputerName": "microserver.lan.shatteredlan.com",
         "VMName": "TestVM3",
         "ProcessorCount": "1",
         "MemoryStartupBytes": "8",
