@@ -51,7 +51,6 @@ foreach ($Config in $VMConfigs){
     $VMName = $Config.VMName
     $ProcessorCount = [int]$Config.ProcessorCount
     $MemoryStartupBytes = [int]$Config.MemoryStartupBytes * 1GB
-    #$VHDPath = "\\$($ComputerName)\$($Config.VHDPath)"
     $VHDPath = $Config.VHDPath
     $VHDSizeBytes = [int]$Config.VHDSizeBytes * 1GB
     $ISOPath = $Config.ISOPath
