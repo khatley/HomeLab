@@ -44,7 +44,12 @@ if(Test-Path -Path $JSONPath){
     exit 1
 }
 
+$error.Clear()
 $RemoteCred = Get-Credential -Message "Enter credentials for the remote Hyper-V server"
+if ($error.Count -gt 0){
+    Write-Error "Login Failed"
+    Exit 1
+}
 
 foreach ($Config in $VMConfigs){
     $ComputerName = $Config.ComputerName

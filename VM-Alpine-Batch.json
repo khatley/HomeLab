@@ -11,24 +11,13 @@
     },
 
     {
-        "ComputerName": "microserver.lan.shatteredlan.com",
-        "VMName": "TestVM2",
-        "ProcessorCount": "1",
-        "MemoryStartupBytes": "8",
-        "VHDPath": "C:\\Hyper-V\\VMs\\TestVM2.vhdx",
-        "VHDSizeBytes": "64",
-        "ISOPath": "C:\\ISOs\\Alpine.iso",
-        "SwitchName": "ExternalSwitch"
-      },
-
-      {
-        "ComputerName": "microserver.lan.shatteredlan.com",
-        "VMName": "TestVM3",
-        "ProcessorCount": "1",
-        "MemoryStartupBytes": "8",
-        "VHDPath": "C:\\Hyper-V\\VMs\\TestVM3.vhdx",
-        "VHDSizeBytes": "64",
-        "ISOPath": "C:\\ISOs\\Alpine.iso",
-        "SwitchName": "ExternalSwitch"
-      }
+      "ComputerName": "microserver.lan.shatteredlan.com",
+      "VMName": "TestVM2",
+      "ProcessorCount": "1",
+      "MemoryStartupBytes": "8",
+      "VHDPath": "C:\\Hyper-V\\VMs\\TestVM2.vhdx",
+      "VHDSizeBytes": "64",
+      "ISOPath": "C:\\ISOs\\Alpine.iso",
+      "SwitchName": "ExternalSwitch"
+    }
 ]
